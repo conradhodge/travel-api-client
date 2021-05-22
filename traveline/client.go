@@ -51,7 +51,7 @@ func (c *Client) BuildServiceRequest(requestRef string, naptanCode string, when 
 	return string(requestBody), nil
 }
 
-// ParseServiceDelivery the response from the Traveline API and return the time of the next tram
+// ParseServiceDelivery the response from the Traveline API and return the time of the next departure
 func (c *Client) ParseServiceDelivery(response string) (*MonitoredVehicleJourney, error) {
 	serviceDelivery := ServiceDelivery{}
 	err := xml.Unmarshal([]byte(response), &serviceDelivery)

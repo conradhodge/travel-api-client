@@ -16,10 +16,10 @@ import (
 	"github.com/google/go-cmp/cmp"
 )
 
-func TestGetNextTram(t *testing.T) {
+func TestGetNextTravel(t *testing.T) {
 	now := time.Now()
-	nextTramTime, _ := time.Parse(time.RFC3339, "2020-03-30T12:34:56.911+01:00")
-	differsNextTramTime, _ := time.Parse(time.RFC3339, "2020-03-30T12:37:56.911+01:00")
+	nextDepartureTime, _ := time.Parse(time.RFC3339, "2020-03-30T12:34:56.911+01:00")
+	differsNextDepartureTime, _ := time.Parse(time.RFC3339, "2020-03-30T12:37:56.911+01:00")
 
 	tests := []struct {
 		name           string
@@ -30,7 +30,7 @@ func TestGetNextTram(t *testing.T) {
 		parseError     error
 		sendError      error
 		expectedError  error
-		expectedResult *transport.NextTramInfo
+		expectedResult *transport.DepartureInfo
 	}{
 		{
 			name:       "Aimed departure time differs from expected departure time",
@@ -48,12 +48,12 @@ func TestGetNextTram(t *testing.T) {
 					ExpectedDepartureTime: "2020-03-30T12:37:56.911+01:00",
 				},
 			},
-			expectedResult: &transport.NextTramInfo{
+			expectedResult: &transport.DepartureInfo{
 				VehicleMode:           "magic carpet",
 				LineName:              "flying",
 				DirectionName:         "Xanadu",
-				AimedDepartureTime:    &nextTramTime,
-				ExpectedDepartureTime: &differsNextTramTime,
+				AimedDepartureTime:    &nextDepartureTime,
+				ExpectedDepartureTime: &differsNextDepartureTime,
 			},
 		},
 		{
@@ -72,12 +72,12 @@ func TestGetNextTram(t *testing.T) {
 					ExpectedDepartureTime: "2020-03-30T12:34:56.911+01:00",
 				},
 			},
-			expectedResult: &transport.NextTramInfo{
+			expectedResult: &transport.DepartureInfo{
 				VehicleMode:           "magic carpet",
 				LineName:              "flying",
 				DirectionName:         "Xanadu",
-				AimedDepartureTime:    &nextTramTime,
-				ExpectedDepartureTime: &nextTramTime,
+				AimedDepartureTime:    &nextDepartureTime,
+				ExpectedDepartureTime: &nextDepartureTime,
 			},
 		},
 		{
@@ -95,11 +95,11 @@ func TestGetNextTram(t *testing.T) {
 					AimedDepartureTime: "2020-03-30T12:34:56.911+01:00",
 				},
 			},
-			expectedResult: &transport.NextTramInfo{
+			expectedResult: &transport.DepartureInfo{
 				VehicleMode:        "magic carpet",
 				LineName:           "flying",
 				DirectionName:      "Xanadu",
-				AimedDepartureTime: &nextTramTime,
+				AimedDepartureTime: &nextDepartureTime,
 			},
 		},
 		{
@@ -193,7 +193,7 @@ func TestGetNextTram(t *testing.T) {
 
 			req := transport.NewTraveline(mockAPI)
 
-			result, err := req.GetNextTramTime(test.naptanCode, test.when)
+			result, err := req.GetNextDepartureTime(test.naptanCode, test.when)
 
 			if test.expectedError != nil {
 				if err == nil {
@@ -209,7 +209,7 @@ func TestGetNextTram(t *testing.T) {
 			}
 
 			if diff := cmp.Diff(test.expectedResult, result); diff != "" {
-				t.Errorf("GetNextTramTime() (-want +got):\n%s", diff)
+				t.Errorf("GetNextDepartureTime() (-want +got):\n%s", diff)
 			}
 		})
 	}
