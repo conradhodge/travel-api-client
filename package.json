@@ -1,0 +1,34 @@
+{
+  "name": "travel-api-client",
+  "version": "0.1.0",
+  "description": "API client for travel information",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install",
+    "spellcheck": "spellchecker -f ./*.md -d .spelling -l en-GB",
+    "lint-markdown": "markdownlint ./*.md"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/conradhodge/travel-api-client.git"
+  },
+  "keywords": [
+    "travel",
+    "api",
+    "go"
+  ],
+  "author": "https://github.com/conradhodge",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/conradhodge/travel-api-client/issues"
+  },
+  "homepage": "https://github.com/conradhodge/travel-api-client#readme",
+  "devDependencies": {
+    "husky": "^6.0.0",
+    "lint-staged": "^11.0.0",
+    "markdownlint-cli": "^0.27.1",
+    "prettier": "^2.3.0",
+    "spellchecker-cli": "^4.4.1"
+  }
+}
