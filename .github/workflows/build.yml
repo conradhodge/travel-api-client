@@ -1,0 +1,46 @@
+name: Build
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      GOPATH: /home/runner/go
+
+    steps:
+      - name: Set up Node
+        uses: actions/setup-node@v2
+        id: node
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: "^1.16.4"
+
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Install
+        run: make install
+
+      - name: Vet
+        run: make vet
+
+      - name: Build
+        run: make build
+
+      - name: Test
+        run: make test
+
+      - name: Convert Go coverage
+        uses: jandelgado/gcov2lcov-action@v1.0.5
+
+      - name: Publish Go code coverage
+        uses: romeovs/lcov-reporter-action@v0.2.16
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          lcov-file: ./coverage.lcov

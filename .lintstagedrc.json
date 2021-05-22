@@ -1,0 +1,5 @@
+{
+  "*.md": ["npm run spellcheck", "npm run lint-markdown"],
+  "*.go": ["make vet-go", "golangci-lint run", "make test-go"],
+  "**/*": "prettier --write --ignore-unknown"
+}
