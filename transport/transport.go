@@ -4,8 +4,8 @@ import (
 	"time"
 )
 
-// NextTramInfo represents the details for the next tram time
-type NextTramInfo struct {
+// DepartureInfo represents the details for the next departure from a stop
+type DepartureInfo struct {
 	VehicleMode           string
 	LineName              string
 	DirectionName         string
@@ -15,5 +15,6 @@ type NextTramInfo struct {
 
 // API represents an API to get travel times for public transport
 type API interface {
-	GetNextTramTime(naptanCode string, when time.Time) (*NextTramInfo, error)
+	// GetNextDepartureTime returns the next departure time at the stop that the NaPTAN code represents
+	GetNextDepartureTime(naptanCode string, when time.Time) (*DepartureInfo, error)
 }

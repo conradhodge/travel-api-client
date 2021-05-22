@@ -41,10 +41,10 @@ func TestBuildServiceRequest(t *testing.T) {
 
 func TestParseServiceDelivery(t *testing.T) {
 	tests := []struct {
-		name                 string
-		response             string
-		expectedNextTramInfo *traveline.MonitoredVehicleJourney
-		expectedError        error
+		name                  string
+		response              string
+		expectedDepartureInfo *traveline.MonitoredVehicleJourney
+		expectedError         error
 	}{
 		{
 			name: "Response has aimed and expected departure time",
@@ -75,7 +75,7 @@ func TestParseServiceDelivery(t *testing.T) {
 					</StopMonitoringDelivery>
 				</ServiceDelivery>
 			</Siri>`,
-			expectedNextTramInfo: &traveline.MonitoredVehicleJourney{
+			expectedDepartureInfo: &traveline.MonitoredVehicleJourney{
 				VehicleMode:       "bus",
 				PublishedLineName: "42",
 				DirectionName:     "Toddington, The Green",
@@ -117,7 +117,7 @@ func TestParseServiceDelivery(t *testing.T) {
 					</StopMonitoringDelivery>
 				</ServiceDelivery>
 			</Siri>`,
-			expectedNextTramInfo: &traveline.MonitoredVehicleJourney{
+			expectedDepartureInfo: &traveline.MonitoredVehicleJourney{
 				VehicleMode:       "bus",
 				PublishedLineName: "42",
 				DirectionName:     "Toddington, The Green",
@@ -174,8 +174,8 @@ func TestParseServiceDelivery(t *testing.T) {
 				}
 			}
 
-			if diff := cmp.Diff(test.expectedNextTramInfo, responseInfo); diff != "" {
-				t.Errorf("Actual next tram mismatch (-want +got):\n%s", diff)
+			if diff := cmp.Diff(test.expectedDepartureInfo, responseInfo); diff != "" {
+				t.Errorf("Actual next departure mismatch (-want +got):\n%s", diff)
 			}
 		})
 	}

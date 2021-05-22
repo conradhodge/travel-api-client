@@ -12,13 +12,13 @@ type Traveline struct {
 	API traveline.API
 }
 
-// NewTraveline returns the implementation of the transport API for the Traveline API
+// NewTraveline returns the implementation of the transport API using the Traveline API
 func NewTraveline(api traveline.API) *Traveline {
 	return &Traveline{API: api}
 }
 
-// GetNextTramTime returns the time of the next tram at the stop that the NaPTAN code represents
-func (c *Traveline) GetNextTramTime(naptanCode string, when time.Time) (*NextTramInfo, error) {
+// GetNextDepartureTime returns the next departure time at the stop that the NaPTAN code represents
+func (c *Traveline) GetNextDepartureTime(naptanCode string, when time.Time) (*DepartureInfo, error) {
 	request, err := c.API.BuildServiceRequest(uuid.New().String(), naptanCode, when)
 	if err != nil {
 		return nil, err
@@ -34,7 +34,7 @@ func (c *Traveline) GetNextTramTime(naptanCode string, when time.Time) (*NextTra
 		return nil, err
 	}
 
-	nextTramInfo := NextTramInfo{
+	nextDepartureInfo := DepartureInfo{
 		LineName:      monitoredVehicleJourney.PublishedLineName,
 		VehicleMode:   monitoredVehicleJourney.VehicleMode,
 		DirectionName: monitoredVehicleJourney.DirectionName,
@@ -45,7 +45,7 @@ func (c *Traveline) GetNextTramTime(naptanCode string, when time.Time) (*NextTra
 	if err != nil {
 		return nil, err
 	}
-	nextTramInfo.AimedDepartureTime = &aimedDepartureTime
+	nextDepartureInfo.AimedDepartureTime = &aimedDepartureTime
 
 	// Convert expected departure time to time.Time
 	if len(monitoredVehicleJourney.MonitoredCall.ExpectedDepartureTime) > 0 {
@@ -53,10 +53,10 @@ func (c *Traveline) GetNextTramTime(naptanCode string, when time.Time) (*NextTra
 		if err != nil {
 			return nil, err
 		}
-		nextTramInfo.ExpectedDepartureTime = &expectedDepartureTime
+		nextDepartureInfo.ExpectedDepartureTime = &expectedDepartureTime
 	}
 
-	return &nextTramInfo, nil
+	return &nextDepartureInfo, nil
 }
 
 func convertDepartureTime(departureTime string) (time.Time, error) {
