@@ -14,7 +14,11 @@ go get -u github.com/conradhodge/travel-api-client
 
 ## Development
 
-For development, please ensure the following dependencies are installed.
+This repository facilitates the ability to develop inside a
+[VS Code remote container](https://code.visualstudio.com/docs/remote/containers),
+this will setup the development environment for you.
+
+Alternatively, please ensure the following dependencies are installed.
 
 - [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
 - [Go](https://golang.org/) 1.16+
@@ -22,7 +26,7 @@ For development, please ensure the following dependencies are installed.
 Then run the following command to install the local dependencies:
 
 ```shell
-make run setup
+make setup
 ```
 
 Run the following to see all available commands.
