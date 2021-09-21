@@ -1,16 +1,11 @@
 GO_CODE_PATH=./...
 
-.DEFAULT_GOAL := explain
-.PHONY: explain
-explain:
-	#### Travel API client
-	#
-	### Targets
-	@cat Makefile* | grep -E '^[a-zA-Z_-]+:.*?## .*$$' | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}'
+.DEFAULT_GOAL:=help
+.PHONY: help
+help: ## Display this help
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m\033[0m\n"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[36m%-10s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
-##
-# Setup targets
-##
+##@ Setup
 
 .PHONY: setup
 setup: clean install build ## Set up for development
@@ -30,10 +25,7 @@ clean: ## Clean the local filesystem
 	rm -fr node_modules
 	git clean -fdX
 
-
-##
-## Vet targets
-##
+##@ Vet
 
 .PHONY: vet
 vet: vet-go prettier ## Vet the code
@@ -53,10 +45,7 @@ prettier: ## Run Prettier
 	@echo "Run Prettier"
 	npx prettier --check .
 
-
-##
-# Build targets
-##
+##@ Build
 
 .PHONY: build
 build: build-go ## Build everything
@@ -65,10 +54,7 @@ build: build-go ## Build everything
 build-go: ## Build the Go code
 	go build $(GO_CODE_PATH)
 
-
-##
-# Test targets
-##
+##@ Test
 
 .PHONY: test
 test: test-go ## Run all the tests
