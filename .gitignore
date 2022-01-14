@@ -1,6 +1,7 @@
 # Go
 coverage.out
 mock/
+bin/
 
 # Node
 node_modules
