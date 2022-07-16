@@ -25,10 +25,10 @@
   },
   "homepage": "https://github.com/conradhodge/travel-api-client#readme",
   "devDependencies": {
-    "husky": "^7.0.2",
-    "lint-staged": "^12.1.3",
-    "markdownlint-cli": "^0.30.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "markdownlint-cli": "^0.31.1",
     "prettier": "^2.4.1",
-    "spellchecker-cli": "^4.8.0"
+    "spellchecker-cli": "^5.0.0"
   }
 }
