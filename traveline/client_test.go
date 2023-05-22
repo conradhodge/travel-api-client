@@ -3,7 +3,7 @@ package traveline_test
 import (
 	"bytes"
 	"errors"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"testing"
 	"time"
@@ -238,7 +238,7 @@ func TestSend(t *testing.T) {
 				return &http.Response{
 					StatusCode: test.statusCode,
 					// Send response to be tested
-					Body: ioutil.NopCloser(bytes.NewBufferString(test.response)),
+					Body: io.NopCloser(bytes.NewBufferString(test.response)),
 					// Must be set to non-nil value or it panics
 					Header: make(http.Header),
 				}, nil

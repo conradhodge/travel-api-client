@@ -2,7 +2,7 @@ package traveline
 
 import (
 	"encoding/xml"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"strings"
@@ -102,7 +102,7 @@ func (c *Client) Send(request string) (string, error) {
 		}
 	}()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", err
 	}
